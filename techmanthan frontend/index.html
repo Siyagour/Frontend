@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="FinWise - AI Financial Wellness Advisor for Students. Track income, expenses, savings and get AI-powered financial insights.">
+    <title>FinWise — AI Financial Wellness Advisor</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <i class="fas fa-wallet logo-icon"></i>
+                <span class="logo-text">FinWise</span>
+            </div>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="#" class="nav-item active" data-page="dashboard" id="nav-dashboard">
+                <i class="fas fa-th-large"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="#" class="nav-item" data-page="home" id="nav-home">
+                <i class="fas fa-home"></i>
+                <span>Home</span>
+            </a>
+            <a href="#" class="nav-item" data-page="chat" id="nav-chat">
+                <i class="fas fa-comment-dots"></i>
+                <span>AI Chat</span>
+            </a>
+            <a href="#" class="nav-item" data-page="breakdown" id="nav-breakdown">
+                <i class="fas fa-chart-pie"></i>
+                <span>Expense Breakdown</span>
+            </a>
+            <a href="#" class="nav-item" data-page="insights" id="nav-insights">
+                <i class="fas fa-lightbulb"></i>
+                <span>Insights</span>
+            </a>
+            <a href="#" class="nav-item" data-page="about" id="nav-about">
+                <i class="fas fa-info-circle"></i>
+                <span>About Us</span>
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <div class="user-profile">
+                <div class="user-avatar">RS</div>
+                <div class="user-info">
+                    <span class="user-name">Rahul Sharma</span>
+                    <span class="user-role">Student</span>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Mobile Header -->
+    <header class="mobile-header" id="mobile-header">
+        <button class="menu-toggle" id="menu-toggle">
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="logo">
+            <i class="fas fa-wallet logo-icon"></i>
+            <span class="logo-text">FinWise</span>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content" id="main-content">
+
+        <!-- ============ DASHBOARD PAGE ============ -->
+        <section class="page active" id="page-dashboard">
+            <div class="page-header">
+                <h1>Your Financial Summary</h1>
+                <p class="page-subtitle">Based on your March 2026 data, focus on building an emergency fund and keeping
+                    expenses under 50% of income.</p>
+            </div>
+
+            <!-- Summary Cards -->
+            <div class="summary-cards">
+                <div class="card summary-card card-income" id="card-income">
+                    <div class="card-icon"><i class="fas fa-arrow-down"></i></div>
+                    <div class="card-body">
+                        <span class="card-label">Income</span>
+                        <span class="card-value">₹25,000</span>
+                        <span class="card-note">Monthly Allowance + Part-time</span>
+                    </div>
+                </div>
+                <div class="card summary-card card-expense" id="card-expense">
+                    <div class="card-icon"><i class="fas fa-arrow-up"></i></div>
+                    <div class="card-body">
+                        <span class="card-label">Total Expenses</span>
+                        <span class="card-value">₹21,200</span>
+                        <span class="card-note">84.8% of Income</span>
+                    </div>
+                </div>
+                <div class="card summary-card card-savings" id="card-savings">
+                    <div class="card-icon"><i class="fas fa-piggy-bank"></i></div>
+                    <div class="card-body">
+                        <span class="card-label">Savings</span>
+                        <span class="card-value">₹3,800</span>
+                        <span class="card-note">15.2% of Income</span>
+                    </div>
+                </div>
+                <div class="card summary-card card-alert" id="card-alert">
+                    <div class="card-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                    <div class="card-body">
+                        <span class="card-label">Overspending</span>
+                        <span class="card-value">2 Areas</span>
+                        <span class="card-note">Food & Entertainment</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts Row -->
+            <div class="charts-row">
+                <div class="card chart-card" id="chart-expense-dist">
+                    <h2 class="card-title">Expense Distribution</h2>
+                    <div class="chart-container">
+                        <canvas id="expenseDonutChart"></canvas>
+                    </div>
+                </div>
+                <div class="card chart-card" id="chart-savings-growth">
+                    <h2 class="card-title">Savings Growth (Projected)</h2>
+                    <div class="chart-container">
+                        <canvas id="savingsLineChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Category Breakdown Table -->
+            <div class="card table-card" id="expense-table-card">
+                <h2 class="card-title">Detailed Expense Breakdown — March 2026</h2>
+                <div class="table-responsive">
+                    <table class="expense-table" id="expense-table">
+                        <thead>
+                            <tr>
+                                <th>Category</th>
+                                <th>Subcategory</th>
+                                <th>Amount (₹)</th>
+                                <th>% of Expenses</th>
+                                <th>% of Income</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="expense-table-body">
+                            <!-- Filled by JS -->
+                        </tbody>
+                        <tfoot>
+                            <tr class="total-row">
+                                <td colspan="2"><strong>Total Expenses</strong></td>
+                                <td><strong>₹21,200</strong></td>
+                                <td><strong>100%</strong></td>
+                                <td><strong>84.8%</strong></td>
+                                <td></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Overspending Alerts -->
+            <div class="card alerts-card" id="overspending-alerts">
+                <h2 class="card-title"><i class="fas fa-exclamation-circle"></i> Overspending Alerts</h2>
+                <div class="alerts-list" id="alerts-list">
+                    <!-- Filled by JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ HOME PAGE ============ -->
+        <section class="page" id="page-home">
+            <div class="page-header">
+                <h1>Welcome to FinWise</h1>
+                <p class="page-subtitle">Your AI-powered Financial Wellness Advisor designed for students.</p>
+            </div>
+            <div class="home-hero">
+                <div class="hero-content">
+                    <h2>Take Control of Your <span class="highlight">Finances</span></h2>
+                    <p>FinWise helps you track income, expenses, and savings with AI-powered insights tailored for
+                        student life. Get personalized advice, detailed breakdowns, and smart alerts for overspending.
+                    </p>
+                    <div class="hero-features">
+                        <div class="feature-item">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Smart Dashboard</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-robot"></i>
+                            <span>AI Chatbot</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-bell"></i>
+                            <span>Spending Alerts</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-graduation-cap"></i>
+                            <span>Student-Focused</span>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" id="get-started-btn" onclick="navigateTo('dashboard')">
+                        <i class="fas fa-arrow-right"></i> Go to Dashboard
+                    </button>
+                </div>
+            </div>
+            <div class="home-stats">
+                <div class="stat-card">
+                    <div class="stat-number">₹25K</div>
+                    <div class="stat-label">Monthly Income Tracked</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">6</div>
+                    <div class="stat-label">Expense Categories</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">15.2%</div>
+                    <div class="stat-label">Savings Rate</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">24/7</div>
+                    <div class="stat-label">AI Assistance</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ AI CHAT PAGE ============ -->
+        <section class="page" id="page-chat">
+            <div class="chat-container">
+                <div class="chat-header">
+                    <div class="chat-header-info">
+                        <div class="chat-avatar"><i class="fas fa-robot"></i></div>
+                        <div>
+                            <h2>AI Financial Advisor</h2>
+                            <p>Ask me anything about your finances</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="chat-messages" id="chat-messages">
+                    <!-- Messages filled by JS -->
+                </div>
+                <div class="chat-input-area">
+                    <div class="chat-input-wrapper">
+                        <button class="attach-btn" title="Attach file"><i class="fas fa-paperclip"></i></button>
+                        <textarea id="chat-input" placeholder="Ask me anything about your finances..."
+                            rows="1"></textarea>
+                        <button class="send-btn" id="send-btn" title="Send message"><i
+                                class="fas fa-paper-plane"></i></button>
+                    </div>
+                    <span class="chat-hint">Press Enter to send, Shift+Enter for new line</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ EXPENSE BREAKDOWN PAGE ============ -->
+        <section class="page" id="page-breakdown">
+            <div class="page-header">
+                <h1>Expense Breakdown</h1>
+                <p class="page-subtitle">Detailed view of all your spending categories with subcategories for March
+                    2026.</p>
+            </div>
+            <div class="breakdown-grid" id="breakdown-grid">
+                <!-- Filled by JS -->
+            </div>
+        </section>
+
+        <!-- ============ INSIGHTS PAGE ============ -->
+        <section class="page" id="page-insights">
+            <div class="page-header">
+                <h1>Financial Insights</h1>
+                <p class="page-subtitle">AI-powered recommendations based on your spending patterns.</p>
+            </div>
+            <div class="insights-grid" id="insights-grid">
+                <!-- Filled by JS -->
+            </div>
+        </section>
+
+        <!-- ============ ABOUT PAGE ============ -->
+        <section class="page" id="page-about">
+            <div class="page-header">
+                <h1>About FinWise</h1>
+                <p class="page-subtitle">Your trusted AI Financial Wellness Advisor for students.</p>
+            </div>
+            <div class="about-content">
+                <div class="card about-card">
+                    <h2>Our Mission</h2>
+                    <p>FinWise is built to empower students with smart, AI-driven financial management tools. We believe
+                        every student deserves to understand their finances, build healthy spending habits, and start
+                        saving early — without needing a finance degree.</p>
+                </div>
+                <div class="card about-card">
+                    <h2>Features</h2>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-check-circle"></i> Real-time expense tracking with detailed subcategories
+                        </li>
+                        <li><i class="fas fa-check-circle"></i> AI chatbot for personalized financial advice</li>
+                        <li><i class="fas fa-check-circle"></i> Overspending alerts and budget recommendations</li>
+                        <li><i class="fas fa-check-circle"></i> Savings growth projections</li>
+                        <li><i class="fas fa-check-circle"></i> Comprehensive expense breakdown with % analysis</li>
+                        <li><i class="fas fa-check-circle"></i> Student-focused financial wellness tips</li>
+                    </ul>
+                </div>
+                <div class="card about-card">
+                    <h2>Privacy Policy</h2>
+                    <p>Your financial data is kept private and secure. FinWise does not share your information with any
+                        third parties. All AI analysis is performed locally within the application.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Overlay for mobile sidebar -->
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>
